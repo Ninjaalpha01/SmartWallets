@@ -22,13 +22,13 @@ fi
 # Cria o diretório de destino se não existir
 mkdir -p "$DIRETORIO_DESTINO"
 
-# Copia os arquivos no formato (NOME_AGENTE).privateKey e (NOME_AGENTE).publicKey
-find "$DIRETORIO_ORIGEM" -type f \( -name "${NOME_AGENTE}.privateKey" -o -name "${NOME_AGENTE}.publicKey" \) -exec cp {} "$DIRETORIO_DESTINO" \;
+# Move os arquivos no formato (NOME_AGENTE).privateKey e (NOME_AGENTE).publicKey
+find "$DIRETORIO_ORIGEM" -type f \( -name "${NOME_AGENTE}.privateKey" -o -name "${NOME_AGENTE}.publicKey" \) -exec mv {} "$DIRETORIO_DESTINO" \;
 
 # Verifica se a operação foi bem-sucedida
 if [ $? -eq 0 ]; then
-    echo "Arquivos '${NOME_AGENTE}.privateKey' e '${NOME_AGENTE}.publicKey' copiados com sucesso para '$DIRETORIO_DESTINO'."
+    echo "Arquivos '${NOME_AGENTE}.privateKey' e '${NOME_AGENTE}.publicKey' movidos com sucesso para '$DIRETORIO_DESTINO'."
 else
-    echo "Erro ao copiar os arquivos."
+    echo "Erro ao mover os arquivos."
     exit 1
 fi
