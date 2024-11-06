@@ -2,7 +2,6 @@
 /* Initial beliefs and rules */
 // chainServer("http://testchain.chon.group:9984/").
 chainServer("http://localhost:9984/").
-destino("../smartParking/").
 
 /* Initial goals */
 !carregarCarteira.
@@ -60,11 +59,9 @@ destino("../smartParking/").
 		.send(Client,tell,bankAccount(fail));
 	}.
 
-+!copiarCarteiras: destino(Destino) <-
-    // makeArtifact("runCopy", "RunCopy", [], CopyId);
++!copiarCarteiras <-
 	lookupArtifact("runCopy", CopyId);
     focus(CopyId);
-    .print("Copiando arquivos para ", Destino);
     .my_name(Nome);
-    executarScript(Nome, Destino).
+    executarScript(Nome).
 

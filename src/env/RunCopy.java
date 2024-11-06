@@ -3,8 +3,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class RunCopy extends Artifact {
+    final String DESTINO = "../smartParking";
+    
     @OPERATION
-    void executarScript(String nome_agente, String destino) {
+    void executarScript(String nome_agente) {
         try {
             String caminhoDoScript = "./copy_files.sh";
 
@@ -14,7 +16,7 @@ public class RunCopy extends Artifact {
                 return;
             }
 
-            ProcessBuilder processBuilder = new ProcessBuilder("bash", caminhoDoScript, nome_agente, destino);
+            ProcessBuilder processBuilder = new ProcessBuilder("bash", caminhoDoScript, nome_agente, DESTINO);
             processBuilder.inheritIO();
             Process process = processBuilder.start();
 

@@ -15,6 +15,7 @@
 mas createWallets {
   agent creator
   agent bank
+  agent manager
 
   uses package: velluscinum "com.github.chon-group:Velluscinum:+"
 }

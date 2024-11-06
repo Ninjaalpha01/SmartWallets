@@ -11,7 +11,6 @@ datasReservas([
     "1729443600"
     ]).
 tiposDeVaga(["Curta", "Longa", "CurtaCoberta", "LongaCoberta"]).
-destino("../smartParking").
 
 /* Initial goals */
 !comecar.
@@ -23,12 +22,11 @@ destino("../smartParking").
     .wait(coinBalance(Balance));
     !copiarCarteira.
 
-+!copiarCarteira : destino(Destino) <-
++!copiarCarteira <-
     lookupArtifact("runCopy", CopyId);
     focus(CopyId);
-    .print("Copiando arquivos para ", Destino);
     .my_name(Nome);
-    executarScript(Nome, Destino);
+    executarScript(Nome);
 	.print(Nome, " pronto");
 	.kill_agent(Nome).
 
@@ -61,6 +59,17 @@ destino("../smartParking").
     .wait(content(Content));
     !findToken(Coin, set(Content));
     !findToken(nft, set(Content)).
+
+-!obterConteudoCarteira: not cryptocurrency(Coin) <-
+    .send(bank, askOne, cryptocurrency(Coin), Reply);
+    .wait(3000);
+    +Reply;
+    !obterConteudoCarteira.
+
+-!obterConteudoCarteira <- 
+    .print("Erro, tentando novamente...");
+    .wait(10000);
+    !obterConteudoCarteira.
 
 +!findToken(Term,set([Head|Tail])) <- 
     !compare(Term,Head,set(Tail));
