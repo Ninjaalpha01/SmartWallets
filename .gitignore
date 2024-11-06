@@ -1,0 +1,30 @@
+# Ignorar arquivos temporários de Jacamo
+*.tmp
+*.bak
+*.swp
+*.~*
+
+# Ignorar arquivos específicos de build ou dependências de ambiente
+node_modules/
+dist/
+build/
+
+# Ignorar arquivos de configuração do editor (como VS Code ou outros)
+.vscode/
+.idea/
+
+# Ignorar arquivos específicos de Jacamo, se houver (adicione padrões conforme necessário)
+*.jacamo
+*.log
+
+# Ignorar arquivos de cache
+.cache/
+*.cache
+
+# Ignorar arquivos específicos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ignorar arquivos de chaves
+*.privateKey
+*.publicKey
