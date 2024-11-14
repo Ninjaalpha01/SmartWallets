@@ -1,7 +1,7 @@
 // Agent bank in project chefBankGlutton
 /* Initial beliefs and rules */
 chainServer("http://testchain.chon.group:9984/").
-// chainServer("http://localhost:9984/").
+//chainServer("http://localhost:9984/").
 
 /* Initial goals */
 !carregarCarteira.
@@ -41,8 +41,8 @@ chainServer("http://testchain.chon.group:9984/").
 	
 +!criarMoeda: chainServer(Server) & myWallet(PrK, PuK) <- 
 	.print("Criando moeda");
-	.velluscinum.deployToken(Server, PrK, PuK, "name:cryptocurrency", 300, cryptocurrency);
-	+coinBalance(300);
+	.velluscinum.deployToken(Server, PrK, PuK, "name:cryptocurrency", 30000, cryptocurrency);
+	+coinBalance(30000);
 	.wait(cryptocurrency(Coin)).
 
 +!lending(ResquestNumber, ClientWallet, Value)[source(Client)]: 
@@ -51,7 +51,7 @@ chainServer("http://testchain.chon.group:9984/").
 	.velluscinum.stampTransaction(Server,PrK,PuK,ResquestNumber,loan(Client));
 	if (Amount >= Value) {
 		.print("Transferência validada. Aguarde enquanto processamos a transação.");
-		.velluscinum.transferToken(Server,PrK,PuK,Coin,ClientWallet,Value,transactionTransfer);
+		.velluscinum.transferToken(Server,PrK,PuK,Coin,ClientWallet,1000,transactionTransfer);
 		.print("Transação processada com sucesso. Obrigado por escolher o SmartBank!");
 		.send(Client,tell,bankAccount(ok));
 	} else {
