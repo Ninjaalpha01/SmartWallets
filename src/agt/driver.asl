@@ -92,7 +92,7 @@ tiposDeVaga(["Curta", "Longa", "CurtaCoberta", "LongaCoberta"]).
 -!compare(Term,[Type,AssetId,Qtd],set(V)).
 
 -!findToken(Type,set([   ])) : not coinBalance(Amount) <- 
-	.print("Moeda Nao encontrada");
+	// .print("Moeda Nao encontrada");
     !pedirEmprestimo.
 
 -!findToken(Type,set([   ])).
@@ -107,19 +107,19 @@ tiposDeVaga(["Curta", "Longa", "CurtaCoberta", "LongaCoberta"]).
         +emprestimoCount(1);
     }
 
-	.print("Pedindo emprestimo...");
+	// .print("Pedindo emprestimo...");
     ?emprestimoCount(Num);
-    .concat("nome:motorista;emprestimo:", Num, Data);
-	.velluscinum.deployNFT(Server, PrK, PuK, Data,
-                "description:Creating Bank Account", account);
-	.wait(account(AssetId));
+    // .concat("nome:motorista;emprestimo:", Num, Data);
+	// .velluscinum.deployNFT(Server, PrK, PuK, Data,
+    //             "description:Creating Bank Account", account);
+	// .wait(account(AssetId));
 
-	.velluscinum.transferNFT(Server, PrK, PuK, AssetId, BankW,
-				"description:requesting lend;value_chainCoin:100",requestID);
-	.wait(requestID(PP));
+	// .velluscinum.transferNFT(Server, PrK, PuK, AssetId, BankW,
+	// 			"description:requesting lend;value_chainCoin:100",requestID);
+	// .wait(requestID(PP));
 	
-	.print("Lend Contract nr:",PP);
-	.send(bank, achieve, lending(PP, PuK, 100));
+	// .print("Lend Contract nr:",PP);
+	.send(bank, achieve, lending(PuK, 100));
     .wait(bankAccount(ok));
     .abolish(pedindoEmprestimo);
     !obterConteudoCarteira.

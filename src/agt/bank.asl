@@ -1,7 +1,7 @@
 // Agent bank in project chefBankGlutton
 /* Initial beliefs and rules */
 chainServer("http://testchain.chon.group:9984/").
-//chainServer("http://localhost:9984/").
+// chainServer("http://localhost:9984/").
 
 /* Initial goals */
 !carregarCarteira.
@@ -41,18 +41,18 @@ chainServer("http://testchain.chon.group:9984/").
 	
 +!criarMoeda: chainServer(Server) & myWallet(PrK, PuK) <- 
 	.print("Criando moeda");
-	.velluscinum.deployToken(Server, PrK, PuK, "name:cryptocurrency", 30000, cryptocurrency);
-	+coinBalance(30000);
+	.velluscinum.deployToken(Server, PrK, PuK, "name:cryptocurrency", 300000, cryptocurrency);
+	+coinBalance(300000);
 	.wait(cryptocurrency(Coin)).
 
-+!lending(ResquestNumber, ClientWallet, Value)[source(Client)]: 
++!lending(ClientWallet, Value)[source(Client)]: 
 			cryptocurrency(Coin) & coinBalance(Amount) & myWallet(PrK,PuK) & chainServer(Server) <-
-	.print("Olá agente ",Client,", Bem vindo ao SmartBank! - Por favor espere enquanto validamos a transferência.");
-	.velluscinum.stampTransaction(Server,PrK,PuK,ResquestNumber,loan(Client));
+	// .print("Olá agente ",Client,", Bem vindo ao SmartBank!");
+	// .velluscinum.stampTransaction(Server,PrK,PuK,ResquestNumber,loan(Client));
 	if (Amount >= Value) {
-		.print("Transferência validada. Aguarde enquanto processamos a transação.");
+		// .print("Transferência validada. Aguarde enquanto processamos a transação.");
 		.velluscinum.transferToken(Server,PrK,PuK,Coin,ClientWallet,1000,transactionTransfer);
-		.print("Transação processada com sucesso. Obrigado por escolher o SmartBank!");
+		.print("Transação processada com sucesso. Obrigado por escolher o SmartBank! => ", Client);
 		.send(Client,tell,bankAccount(ok));
 	} else {
 		.print("Não há saldo suficiente para esta moeda. Transação cancelada. Obrigado por escolher o SmartBank!");

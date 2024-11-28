@@ -43,25 +43,41 @@ listaVagas([ ]). // talvez de erro
 +!verificarListaVagas: not chainServer(Server) <-
 	.wait(5000);
 	!verificarListaVagas.
-
+    
 +!listarVagas: chainServer(Server) & myWallet(PrK,PuK) <- 
-	.velluscinum.deployNFT(Server, PrK, PuK, "name:Vaga1;tipo:Curta", "status:disponivel", account);
-	.wait(account(Vaga1Id));
+    !criarVagasCurta(1, Server, PrK, PuK, VagasCurta);
+    !criarVagasLonga(1, Server, PrK, PuK, VagasLonga);
+    !criarVagasCurtaCoberta(1, Server, PrK, PuK, VagasCurtaCoberta);
+    !criarVagasLongaCoberta(1, Server, PrK, PuK, VagasLongaCoberta);
+    .concat(VagasCurta, VagasLonga, VagasCurtaCoberta, VagasLongaCoberta, Lista);
+    -+listaVagas(Lista).
 
-	.velluscinum.deployNFT(Server, PrK, PuK, "name:Vaga2;tipo:Longa", "status:disponivel", account);
-	.wait(account(Vaga2Id));
++!criarVagasCurta(Qtd, Server, PrK, PuK, Vagas) <- 
+    !criarVagas("Curta", Qtd, Server, PrK, PuK, Vagas).
 
-	.velluscinum.deployNFT(Server, PrK, PuK, "name:Vaga3;tipo:Longa", "status:disponivel", account);
-	.wait(account(Vaga3Id));
++!criarVagasLonga(Qtd, Server, PrK, PuK, Vagas) <- 
+    !criarVagas("Longa", Qtd, Server, PrK, PuK, Vagas).
 
-	.velluscinum.deployNFT(Server, PrK, PuK, "name:Vaga4;tipo:CurtaCoberta", "status:disponivel", account);
-	.wait(account(Vaga4Id));
++!criarVagasCurtaCoberta(Qtd, Server, PrK, PuK, Vagas) <- 
+    !criarVagas("CurtaCoberta", Qtd, Server, PrK, PuK, Vagas).
 
-	.velluscinum.deployNFT(Server, PrK, PuK, "name:Vaga5;tipo:LongaCoberta", "status:disponivel", account);
-	.wait(account(Vaga5Id));
++!criarVagasLongaCoberta(Qtd, Server, PrK, PuK, Vagas) <- 
+    !criarVagas("LongaCoberta", Qtd, Server, PrK, PuK, Vagas).
 
-	Lista = [Vaga1Id, Vaga2Id, Vaga3Id, Vaga4Id, Vaga5Id];
-	-+listaVagas(Lista).
++!criarVagas(Tipo, Qtd, Server, PrK, PuK, Vagas) <- 
+    !criarVagasAux(Tipo, Qtd, Server, PrK, PuK, [], Vagas).
+
++!criarVagasAux(Tipo, 0, Server, PrK, PuK, Vagas, Vagas) <- 
+    true.
+
++!criarVagasAux(Tipo, Qtd, Server, PrK, PuK, VagasAcumuladas, Vagas) <- 
+    .concat("name:Vaga", Qtd, NomeVaga);
+    .concat(NomeVaga, ";tipo:", Tipo, DescricaoVaga);
+    .velluscinum.deployNFT(Server, PrK, PuK, DescricaoVaga, "status:disponivel", account);
+    .wait(account(VagaId));
+    NovaLista = [VagaId | VagasAcumuladas];
+    NovoQtd = Qtd - 1;
+    !criarVagasAux(Tipo, NovoQtd, Server, PrK, PuK, NovaLista, Vagas).
 
 -!listarVagas <-
 	.print("Nao foi possivel listar as vagas").
